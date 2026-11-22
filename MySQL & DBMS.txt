@@ -1,0 +1,113 @@
+MySQL
+===================================
+Data : It is a collection of raw facts, figures or details that is used to get the information
+Ex: Sree, 90, Raj, 80, Shiv, 60, Sai, 100
+
+Information : It is a collection of processed, organized, and meaningful data that helps us understand something or make decisions.
+Ex:
+Total marks = 330
+Average marks = 82.5
+Highest mark = 100 
+
+Table : It is a collection of rows/records and columns/fields
+Filed : It is a column that stores a particular type of information about a record.
+Record : It is a single row in a table that contains a collection of related field values representing one complete entry.
+Database : It is an organized collection of data that is stored electronically so that we can easily access, manage, update, and retrieve it.
+Files : It is a place where we store data or information (csv, excel, text)
+
+File management system(FMS) : 
+Easy storage : Stores large amount of data on computer files
+Quick access : Finds info faster than searching through books
+Easy updating : data can be modified without rewriting entire page
+Data backup & recovery : copy of data can be stored for later retrieval
+----------------------------------------
+
+DBMS :
+=======================================
+It is software that helps users create, store, manage, retrieve, update, and delete data in a database.
+
+Advantages of DBMS :
+-->Reduces Data Redundancy
+-->Data Security
+-->Data Sharing
+-->Data Consistency
+-->Data Backup and Recovery
+-->Centralized Data Management
+
+RDBMS : It is a type of DBMS that stores data in the form of tables (rows and columns) and establishes relationships between tables using keys.
+[MySQL, PostgreSQL, Oracle Database, Microsoft SQL server, IBM DB2]
+
+Non RDBMS : refers to non-relational database systems that store data in formats such as key-value pairs, documents, column families, and graphs.
+[MongoDB, Cassandra, HBase, Redis]
+---------------------------------------------------------
+
+Data Models : It is a way to represent, organize and store the data in database. It defines how the diff features of data are related and what rules applied to the data
+
+Types: 
+-----------------------
+Conceptual model : It is a high-level representation of a database that describes what data needs to be stored and how different data entities are related to each other.
+-->Entities: Real-world objects about which we store data.
+Example: Student, Teacher, Course.
+-->Attributes: Properties or characteristics of entities.
+Example: Student ID, Name, Age.
+-->Relationships: Connections between entities.
+Example: Student enrolls in Course.
+
+Logical data model : It is a detailed representation of a database that describes entities, attributes, relationships, primary keys, and foreign keys.
+--> It describe without physical implementation
+
+Physical data model : It is the actual implementation-level design of a database that describes how data will be stored in a specific database management system (DBMS).
+
+Hierarchical data model : It is a type of database model that organizes data in a tree-like structure using parent-child relationships.
+-->Tree Structure: Data is arranged in a tree format.
+-->Parent-Child Relationship: Each child has one parent.
+-->One-to-Many Relationship: One parent can have multiple children.
+
+Network data model : It is a database model that organizes data in a network-like structure, where records are connected through multiple relationships.
+-->Graph Structure: Data is organized like a network.
+-->Multiple Relationships: A record can have multiple parent records.
+-->Many-to-Many: Supports many-to-many relationships
+
+Relational data model : It is a database model that organizes data into tables consisting of rows and columns. Different tables are connected using keys such as Primary Keys and Foreign Keys.
+
+Object relational data model : It combines features of both relational databases and object-oriented programming. It stores data in tables (rows and columns) like an RDBMS, but also supports object-oriented features such as complex data types, objects, inheritance, and user-defined types.
+
+Important Features of Each Database
+MySQL
+- Easy to learn and use.
+- Community Edition is free and open-source.
+- Commonly used in web development.
+Oracle Database
+- Provides advanced security features.
+- Supports PL/SQL programming.
+- Suitable for complex enterprise applications.
+IBM Db2
+- Designed for large-scale enterprise applications.
+- Supports transaction processing and analytics.
+- Provides multiple deployment options.
+--------------------------------------------------------
+
+ER-MODELS
+===========
+ER-Diagrams
+=========================================================================
+An ER diagram is a graphical representation of database. It shows entities, their attributes, and the relationships between enetities
+
+Types:
+-->Entity (Strong, Weak)  --represented with rectangle shape--
+-->Attributes (Single, Multi-valued, Composite, Derived, Key) --represented with ellipse shape--
+-->Relationships (One-One, One-Many, Many-One, Many-Many) --represented with diamond shape--
+
+Entity : It is a real-world object or thing about which we want to store data in database
+-->Strong Entity : An entity that has own primary key to uniquely each record. It doesn't depend on another entity
+	Ex : Student
+-->Weak Entity : An entity that cannot be uniquely identified using its own attributes alone. It depends on strong entity for identification
+	Ex : Student ID
+
+Attributes : It is a property or characteristic of an entity. It describes the information we want to store about an entity
+-->Simple attribute : An attribute that cannot be divided into smaller parts
+-->Multi-valued attribute : An attribute that contains only multiple value for one entity
+-->Composite : An attribute that can be divided into smaller sub attributes
+-->Key attribute : Ana attribute that uniquely identifies each entity
+-->Derived attribute : An attribute whose value is calculated using another attribute
+---------------------------------------------------------------------
