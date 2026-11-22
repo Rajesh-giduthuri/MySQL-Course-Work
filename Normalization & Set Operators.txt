@@ -1,0 +1,80 @@
+NORMALIZATION : (practice tables examples and definitions)
+=================================================
+Normalization is the process of organizing data in a database to reduce redundancy and improve data integrity
+
+Advantages:
+-->Reduces duplicate data
+-->Avoids insertion, update, deletion anomalies
+-->Improves consistency
+-->Organize data into multiple related tables
+	
+1NF :
+--------------
+-->It should have unique column names
+-->It should have same domain values in the table
+-->It should have single valued attributes/columns
+
+Composite key :
+===================
+Composite key is a combination of two or more columns used together to uniquely identify each record in a tables
+
+2NF :
+-------------
+-->It should be in 1NF
+-->It should not have Partial Dependency(one non key column depends on half of the composite primary column)
+
+Transitive Dependency :
+==================
+one non key column depends on anther non key column
+
+3NF :
+-------------
+-->It should be in 1NF and 2NF
+-->It should not have Transitive Dependency(one non key column depends on anther non key column)
+
+
+SET OPERATORS :
+=====================================
+Set operators are used to combine the results of two or more select statements just like mathematical sets
+
+Types:
+-->UNION
+-->UNION ALL
+-->INTERSECT
+-->EXCEPT
+
+UNION : Union combines the result of two or more tables and removes duplicates
+Syntax:
+select column1,column2
+from table1
+union 
+select column1,column2
+from table2
+------------------------------------
+
+UNION ALL : combines the result of two or more tables and keeps duplicates
+Syntax:
+select column1,column2
+from table1
+union all
+select column1,column2
+from table2
+------------------------------------
+
+INTERSECT : returns only common rows present in both tables
+Syntax:
+select column1,column2
+from table1
+intersect
+select column1,column2
+from table2
+------------------------------------
+
+EXCEPT : returns the rows from first select statements results that are not present in second select statement
+Syntax:
+select column1,column2
+from table1
+except
+select column1,column2
+from table2 
+------------------------------------
