@@ -1,0 +1,265 @@
+Constraints:
+=============================================
+These are rules applied to table columns to control the type of data that can be stored in a table.
+
+Types :
+1. NOT NULL
+- Does not allow a column to store NULL values.
+- Ensures that a value must be provided.
+Syntax: 
+CREATE TABLE table_name (
+    column_name datatype UNIQUE
+);
+
+2. UNIQUE
+- Ensures that all values in a column are unique.
+- Prevents duplicate values.
+Syntax:
+CREATE TABLE table_name (
+    column_name datatype UNIQUE
+);
+
+3. PRIMARY KEY
+- Uniquely identifies each record in a table.
+- Does not allow duplicate or NULL values.
+- A table can have only one primary key constraint, which may contain multiple columns.
+Syntax:
+CREATE TABLE table_name (
+    column_name datatype PRIMARY KEY
+);
+
+4. FOREIGN KEY
+- Connects two related tables.
+- Ensures referential integrity.
+- References a primary key or eligible unique key in another table.
+Syntax:
+CREATE TABLE table_name (
+    column_name datatype,
+    FOREIGN KEY (column_name)
+    REFERENCES parent_table(parent_column)
+);
+
+5. CHECK
+- Ensures that values satisfy a specified condition.
+- Prevents invalid data from being inserted or updated.
+Syntax:
+CREATE TABLE table_name (
+    column_name datatype CHECK (condition)
+);
+
+6. DEFAULT
+- Assigns a predefined value when no value is provided for a column during insertion.
+- Helps avoid missing values where a default is appropriate.
+Syntax:
+CREATE TABLE table_name (
+    column_name datatype DEFAULT default_value
+);
+
+7.Auto Increment
+-is an attribute in MySQL that automatically generates a unique numeric value whenever a new record is inserted into a table.
+Syntax:
+CREATE TABLE table_name (
+    column_name INT AUTO_INCREMENT PRIMARY KEY,
+    other_column datatype
+);
+------------------------------------------------------
+
+Commands :
+=====================================
+-->show databases;
+-->use database;
+-->show tables;
+-->desc table; (describe table structure)
+-->select * from table;
+
+CREATE TABLE student (
+    student_id INT,
+    name VARCHAR(50),
+    age INT,
+    city VARCHAR(50)
+);
+
+INSERT INTO student VALUES (101, 'Sree', 22, 'Hyderabad');
+
+ALTER TABLE student ADD email VARCHAR(100);
+
+ALTER TABLE student MODIFY name VARCHAR(100);
+
+ALTER TABLE student CHANGE name student_name VARCHAR(100);
+
+ALTER TABLE student DROP COLUMN email;
+
+ALTER TABLE student RENAME TO students;
+
+ALTER TABLE student ADD CONSTRAINT unique_email UNIQUE(email); #adding constraint
+
+ALTER TABLE student MODIFY name VARCHAR(50) NOT NULL; #adding constraint
+
+ALTER TABLE student ADD PRIMARY KEY(student_id); #adding constraint
+
+ALTER TABLE student ALTER city SET DEFAULT 'Hyderabad';
+
+UPDATE student SET age = 23, city = 'Mumbai' WHERE student_id = 101;
+
+UPDATE student SET city = 'Hyderabad';
+
+DELETE FROM student WHERE student_id = 102;
+
+DELETE FROM student WHERE age > 21 AND city = 'Chennai';
+
+DELETE FROM student;
+
+TRUNCATE TABLE student;
+
+DROP table student;
+
+DROP database database_name;
+------------------------------------------------------------------
+
+A Foreign Key is a constraint in MySQL that establishes a relationship between two tables.
+CREATE TABLE employee (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    dept_id INT,
+    FOREIGN KEY (dept_id)
+    REFERENCES department(dept_id)
+);
+
+If the employee table already exists, you can add a Foreign Key using ALTER TABLE.
+ALTER TABLE employee
+ADD CONSTRAINT fk_department
+FOREIGN KEY (dept_id)
+REFERENCES department(dept_id);
+
+ON DELETE and ON UPDATE : These options define what happens to child records when the referenced parent record is deleted or updated.
+-->CASCADE : Automatically deletes or updates matching child values
+CREATE TABLE employee (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    dept_id INT,
+    FOREIGN KEY (dept_id)
+    REFERENCES department(dept_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+-------------------------------------------------------
+
+#--Add primary key column to a table
+alter table student
+add constraint primary key(id);
+
+#--modify data type
+alter table student modify id bigint;
+
+#--drop primary key column
+alter table student
+drop column id;
+
+#--drop primary key constraint
+alter table student
+drop primary key;
+
+#--adding foreign key constraint
+alter table course
+add constraint fk_student_course
+foreign key(cid) references course(cid); #--MUL
+
+#--drop foreign key constraint
+alter table student
+drop index fk_student_course;
+
+#--permission to foreign key column
+alter table student
+add constraint fk_student_course
+foreign key(cid) references course(cid)
+on delete cascade
+on update cascade;
+
+#--insert values to course table
+insert into course values(101,'Java'),(102,'Python'),(103,'DA');
+
+insert into student values(1,'Ravi',102),(2,'Sree',103),(3,'Siva',101);
+
+#--update of foreign key column in parent table
+update course set cname='DS' where cid=101;
+
+update course set cid=105 where cid=101;
+
+delete from course where cid=105;
+
+#--insert values to only specific columns
+insert into student(id,name,age) values(11,'Jaya',22);
+
+update student set fees=24000 where name='Ravi';
+
+#--change Priya city from Chennai to hyd
+update student set city='Hyderabad' where name='Priya';
+
+update student set fees=fees+2000 where course='Java';
+
+update student set fees=fees+(fees*0.1) where name='Arjun';
+-------------------------------------------------------------------------
+
+#----Create table from another table--------
+=======================================================
+
+create table stud_backup as select *from student;
+
+create table stud_details as select id, name, age from student;
+
+create table stud_course as select *from student where course='Python';
+
+#--create and insert records from sourse table to backup table
+create table student_backup(id int, sname varchar(20), course varchar(20));
+
+insert into student_backup select id, name, course from student;
+----------------------------------------------------------------
+
+ORDER BY CLAUSE
+===========================================
+It is used to sort the records in a table based on one or more columns
+Syntax:
+SELECT column_name
+FROM table_name
+ORDER BY column_name ASC;
+
+SELECT * FROM student ORDER BY city ASC, fees DESC;
+---------------------------------------------
+
+DISTINCT
+===========================================
+It is used to retrieve only unique (non-duplicate) values from a table
+Syntax:
+SELECT DISTINCT column_name
+FROM table_name;
+
+SELECT DISTINCT city FROM student;
+
+SELECT DISTINCT city, fees FROM student;
+
+SELECT COUNT(DISTINCT city) FROM student;
+---------------------------------------------
+
+LIMIT
+===========================================
+It is used to restrict the number of rows returned by a SELECT query
+Syntax:
+SELECT * FROM table_name
+LIMIT number;
+
+SELECT * FROM student LIMIT 5;
+
+SELECT * FROM student ORDER BY fees DESC LIMIT 3;
+--------------------------------------------
+
+OFFSET
+==========================================
+It is used to skip a specified number of rows before returning records from a query
+Syntax:
+SELECT * FROM table_name
+LIMIT number_of_rows OFFSET number_of_rows_to_skip;
+
+SELECT * FROM student LIMIT 4 OFFSET 3;
+
+SELECT * FROM student ORDER BY fees DESC LIMIT 1 OFFSET 1;
+-------------------------------------------
