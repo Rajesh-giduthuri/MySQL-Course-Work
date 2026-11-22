@@ -1,0 +1,151 @@
+TCL Commands :
+==========================================================
+-->It helps to save changes permanently or undo changes made during transaction
+-->Transaction is a group of one or more sql statements that are executed together as a single unit 
+
+START TRANSACTION or BEGIN : This command starts a new transaction
+
+COMMIT : This command saves all changes permanently in the database
+
+ROLLBACK : This command undos all changes made in the current transaction before it is commited
+
+SAVEPOINT : This allows you to mark a specific point inside a transaction you can rollback to that point instead of rolling back the whole transaction
+
+#--To start a transaction------
+START TRANSACTION; or BEGIN;
+
+update accounts set balance=balance-2000 where account_id=101;
+update accounts set balance=balance+2000 where account_id=102;
+select *from accounts;
+
+ROLLBACK;
+
+update accounts set balance=balance-5000 where account_id=101;
+select *from accounts;
+
+SAVEPOINT sp1;
+update accounts set balance=balance-5000 where account_id=101;
+SAVEPOINT sp2;
+update accounts set balance=balance where account_id=102;
+
+ROLLBACK to sp1; #--upto sp1---#
+
+COMMIT;
+---------------------------------------------------
+
+ACID PROPERTIES
+==============================================================
+ACID properties ensures that database transactions are processed reliably and maintain data integrity
+
+A-Atomicity : A transaction is treated as a single unit. Either all operations are completed successfully or none of them are applied
+
+Ex : 
+Transfer 1000 from account A to B
+-->1000 deducted from account A
+-->added for account B
+
+If money is deducted from account A. If not added to account b the entire transaction will be rollbacked
+----------------------------------------------------------------
+
+C-Consistency : A transaction must take the database from one valid state another valid state by following all defined constraints and rules
+
+Ex : 
+account A=5000
+account B=2000
+after transferring 1000 from A to B
+
+account A=4000
+account B=3000
+
+Total balance remains same
+-----------------------------------------------------------------
+
+I-Isolation : Multiple transaction executing simultaneously should not interfere with each other. 
+Each transaction should behaves as if it is executing independently
+
+Ex :
+account balance=5000
+-->Transaction 1 wants to withdraw 3000
+-->Transaction 2 wants to withdraw 4000
+
+It prevents incorrect data
+-----------------------------------------------------------------
+
+D-Durability : Once transaction is successfully committed, The changes are permanently saved even if the system crashes or restarts
+
+-----------------------------------------------------------------
+
+DCL Commands 
+========================================================
+It is used to give and remove permissions to database users
+
+GRANT : This command is used to provide permissions to database user to grant specific operations on database objects
+
+REVOKE : This command is used to remove permissions to database user to revoke specific operations on database objects
+
+-------------------------------------------------------------------------
+Cmd commands
+-->cd C:\Program Files\MySQL\MySQL Server 8.0\bin
+-->mysql -u root -p
+-->username:root
+-->password:root
+
+-->create database company;
+-->use company;
+
+-->create user 'Rahul'@'localhost' identified by 'Rahul@123';
+
+-->grant select on company.employee to 'Rahul'@'localhost';
+
+-->show grants for 'Rahul'@'localhost';
+
+-->exit; #--exit from root user--#
+
+-->mysql -u Rahul -p  #---login to user with username and password----#
+username : Rahul
+password : Rahul@123
+
+-->select *from employee;
+-->delete from employee where emp_id=110; #---Error because access granted only for select command---#
+ERROR 1142 (42000): DELETE command denied to user 'Rahul'@'localhost' for table 'employee'
+
+-->exit;  #----exit from current user-----#
+
+-->drop user 'Rahul'@'localhost';
+
+#--create new user---#
+-->MySQL -u root -p 
+password: root
+
+-->create user 'Raj'@'localhost' identified by 'Raj@123';
+-->grant select,insert on company.employee to 'Raj'@'localhost';
+-->exit; #----exit from root user----#
+-->MySQL -u Raj -p  #---login to user with username and password----#
+password: Raj@123
+-->use company;
+-->select *from employee;
+-->insert into employee values(111,'Sindhu','HR',40000,25,'Hyderbad',null,null);
+-->exit;
+--------------------------------------------------------------------------------
+
+#--------Give all permissions to a user-----------#
+-->MySQL -u root -p
+root
+-->use company;
+-->create user 'Sree'@'localhost' identified by 'Sree@123';
+-->grant all privileges on company.employee to 'Sree'@'localhost';
+-->show grants for 'Sree'@'localhost';
+-->exit;
+
+-------------------------------------------------------------------------------
+
+#------Revoke permissions from users---------#
+-->MySQL -u root -p
+root
+-->use company;
+-->revoke select on company.employee from 'Rahul'@'localhost';
+-->show grants for 'Rahul'@'localhost';
+-->mysql> use company;  #-----Error because not even single to use the database-------#
+ERROR 1044 (42000): Access denied for user 'Rahul'@'localhost' to database 'company' 
+
+-----------------------------------------------------------------------------
