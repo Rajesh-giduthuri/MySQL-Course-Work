@@ -1,0 +1,85 @@
+SUB-QUERIES :
+===========================================
+A sub-query is a query written inside another sql query. It is used to retrieve data from one or more tables and pass the result to outer query
+
+INNER QUERY: The query return inside another query
+OUTER QUERY: The main query that uses the result of the inner query
+
+Syntax:
+select columns
+from table
+where column operator(select column from table);
+-------------------------------------
+
+SINGLE ROW SUB-QUERY : It is used to return only one row from the inner query. 
+-->It is used with single row comparison operator to compare a value with the result of the inner query
+-------------------------------------
+
+MULTIPLE ROW SUB-QUERY : It is a sub-query that returns two or more rows from the inner query.
+-->It is used when the inner query produces multiple values for comparsion with outer query.
+-->uses operators: in, not in, any, all
+
+in
+====
+in is operator that checks whether a specified value matches any one of the values returned by the inner query.
+if match is found, the condition becomes true
+
+not in:
+=======
+not in  is a operator that checks weather a specified value does not matches any one of the values returned by the inner query.
+it returns true when there is no match.
+
+any :
+=====
+any is a operator thta checks weather comparsion is true for atleast one value return by the inner query.
+if the condition is satisified by one or more values the result is true.
+
+all :
+=====
+all is an sql operator that checks wheather a comparsion condition is true for every value returned by the inner query.
+the condition must satisfied by all returned values.
+------------------------------------------------
+
+NESTED SUB-QUERY : It is written inside another subquery
+-->It contains two or more levels of queries, where inner most query executes to provide a result to the next query
+Syntax:
+select columns
+from table_name
+where column_name operator(
+			select column_name
+			from table_name
+			where condition(
+				select column_name
+				from table_name
+				whwere condition
+				)
+			);
+--------------------------------------------------
+
+CORELATED SUB-QUERY : sub query that depends on the outer query for its execution
+-->It references two or more columns from the outer query inside the inner query
+Syntax:
+select *from employee e
+where salary>(
+select avg(salary)
+from employee
+where dept_id=e.dept_id);
+-------------------------------------------------
+
+MULTI-COLUMN SUB-QUERY : It returns two or more columns from the inner query
+-->It is used to compare multiple column values together in the outer query
+Syntax:
+select column1, column2
+from table_name
+where (column1, column2) operator(
+select column1, column2
+from table_name
+where condition);
+
+Query: (Employees matching ravi's department id and salary)
+select *from employee
+where salary(dept_id, salary)=(
+select dept_id, salary
+from employee
+where emp_name='Ravi') and emp_name != 'Ravi';
+-------------------------------------------------
