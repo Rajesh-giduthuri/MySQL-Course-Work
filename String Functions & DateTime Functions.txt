@@ -1,0 +1,188 @@
+String Functions:
+============================
+String functions are built-in functions used to perform operations on string values(characters or text),such as changing case, finding length, extracting characters, joining strings and replacing string
+
+UPPER(): It is used to convert all lower case char in string into upper case
+Syntax:
+select upper(string);
+------------------------------
+
+LOWER(): It is used to convert all upper case char in string into lower case
+Syntax:
+select lower(string);
+------------------------------
+
+LENGTH(): It is used to return the length of the string
+Syntax:
+select length(string);
+------------------------------
+
+CONCAT(): It is used to combine multiple strings into single string
+Query:
+select concat('sree',' ','kanth');
+------------------------------
+
+CONCAT_WS(): concat with separators(concat_ws) combines multiple string using specified separator 
+Query:
+select concat_ws('-','2026','11','04');
+Result:
+2026-11-04
+------------------------------
+
+SUBSTRING(): extracts a porsion of a string from a specified starting position
+Query:
+select substring('sreekanth',1,4);
+------------------------------
+
+LEFT(): It is used to return the specified number of char from left side of a string
+Query:
+select left('Sreekanth',4);
+-------------------------------
+
+RIGHT(): It is used to return the specified number of char from right side of a string
+Query:
+select right('sreekanth',4);
+-------------------------------
+
+REPLACE(): It is used to replace all occurrences of a specified substring with another substring
+Syntax:
+select replace(string,old_string,new_string);
+-------------------------------
+
+TRIM(): Removes leading and trailing spaces from a string
+Query:
+SELECT TRIM(' Hello ');
+-------------------------------
+
+LTRIM(): Removes leading spaces from the left side of a string.
+Query:
+SELECT LTRIM(' Hello');
+-------------------------------
+
+RTRIM(): Removes trailing spaces from the right side of a string.
+Query:
+SELECT RTRIM('Hello ');
+-------------------------------
+
+REVERSE(): Reverses the characters of a string.
+Query:
+SELECT REVERSE('Hello');
+-------------------------------
+
+INSTR(): Returns the position of the first occurrence of a substring within a string.
+Query:
+SELECT INSTR('Hello World', 'World');
+-------------------------------
+
+LOCATE(): Returns the position of a substring within a string.
+Query:
+SELECT LOCATE('World', 'Hello World');
+-------------------------------
+
+LPAD(): Adds characters to the left side of a string to make it the specified length.
+Query:
+SELECT LPAD('123', 5, '0');
+-------------------------------
+
+RPAD(): Adds characters to the right side of a string to make it the specified length.
+Query:
+SELECT RPAD('123', 5, '0');
+-------------------------------
+
+REPEATE(): Repeats a string the specified number of times.
+Query:
+SELECT REPEAT('Hi', 3);
+-------------------------------
+
+SPACE(): Returns a string containing the specified number of spaces.
+Query:
+SELECT SPACE(5);
+------------------------------------------------------------
+
+
+DATE & TIME FUNCTIONS:
+===========================================
+Data & Time functions are used to retrieve, extract calculate and fromat date and time values
+
+NOW(): returns current date and time
+Query:
+select now();
+------------------------------------
+
+CURDATE(): returns the current date without time
+Query:
+select curdate();
+------------------------------------
+
+CURTIME(): returns the current time without date
+Query:
+select curtime();
+------------------------------------
+
+YEAR(): extracts the year from given date
+Query:
+select year('2026-11-05');
+------------------------------------
+
+MONTH(): extracts the month from given date, It returns a value between 1 to 12
+Query:
+select month('2026-11-05');
+------------------------------------
+
+DAY(): extracts the day from given date, It returns a value between 1 to 31
+Query:
+select day('2026-11-05');
+------------------------------------
+
+DAYNAME(): returns the name of the week day
+Query:
+select dayname('2026-11-05');
+------------------------------------
+
+MONTHNAME(): returns the name of the month 
+Query:
+select monthname('2026-11-05');
+------------------------------------
+
+DATEDIFF(): returns the diff between the two dates
+Query:
+select datediff('2026-11-05','2026-10-05');
+select datediff(curdate(),'2026-11-05');
+------------------------------------
+
+DATE_ADD(): adds a specified time interval to given date
+Query:
+select date_add('2026-11-05',interval 5 day);
+select date_add('2026-11-05',interval 5 month);
+select date_add('2026-11-05',interval 5 year);
+------------------------------------
+
+DATE_SUB(): subtracts a specified time interval from given date
+Query:
+select date_sub('2026-11-05',interval 5 day);
+------------------------------------
+
+
+STR_To_DATE():
+===================================
+converts a string into a date value based on the specified format
+Specifiers:
+------------------
+%d----->Day(01-31)
+%m----->Month(01-12)
+%y----->two-digit-year
+%M----->Full-month name
+%Y----->four-digit-year
+%b----->short month name
+%w----->Full weekday name
+%H----->Hour(00-23)
+%h----->Hour(01-12)
+%i----->Minutes
+%s----->Seconds
+
+Syntax:
+select STR_TO_DATE(string, format);
+
+Query:
+select STR_TO_DATE('November 23 2026','%M %d %Y');
+------------------------------------
