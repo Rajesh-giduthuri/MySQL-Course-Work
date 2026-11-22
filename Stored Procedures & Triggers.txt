@@ -1,0 +1,234 @@
+STORED PROCEDURES
+===========================================================
+A stored Procedure is a collection of sql statements stored permanently in the database and executes whenever required by calling its name
+-->Instead of writing same queries repeatedly
+
+Syntax:
+DELIMITER //  #---($$,##)--#
+CREATE PROCEDURE procedure_name()
+BEGIN
+--SQL statements
+END //
+DELIMITER ;
+
+CALL procedure_name();
+
+-------------------------------------------------
+Types of parameters
+
+1.IN : This is used to pass input values from the calling statement to the stored procedure
+-->The procedure uses the received value to perform an operation
+Syntax:
+DELIMITER //
+create procedure procedure_name(IN parameter_name datatype)
+begin
+---SQL statements
+end ;
+DELIMITER ;
+
+Query:
+delimiter //
+create procedure GetEmployeeById(IN empId int)
+begin
+select *from employee
+where emp_id=empIdd;
+end //
+delimiter ;
+
+call GetEmployeeById(101);
+--------------------------------------------------------------------
+
+2.OUT : This is used to return a value from the stored procedure to the calling program
+Syntax:
+DELIMITER //
+create procedure procedure_name(OUT parameter_name datatype)
+begin
+---SQL statements
+end ;
+DELIMITER ;
+
+Query:
+delimiter //
+create procedure GetEmployeeCount(OUT empCount int)
+begin
+select Count(*) into empCount from employee;
+end //
+delimiter ;
+
+call GetEmployeeCount(@Count);
+
+select @Count;
+-------------------------------------------------------------------
+
+3.INOUT : This is used to pass a value into the stored procedure and return the modified value from the same parameter
+Syntax:
+DELIMITER //
+create procedure procedure_name(INOUT parameter_name datatype)
+begin
+---SQL statements
+SET parameter_name=value;
+end ;
+DELIMITER ;
+
+Query:
+
+
+
+
+-------------------------------------------------------------------------
+
+Triggers
+=========================================================================
+A trigger is a database object that automatically executes
+
+based on events : (INSERT, UPDATE and DELETE)
+
+TRIGGERS AND PURPOSE
+-->BEFORE INSERT (Before inserting a record)
+-->AFTER INSERT (After inserting a record)
+-->BEFORE UPDATE (Before updating a record)
+-->AFTER UPDATE (After updating a record)
+-->BEFORE DELETE (Before deleting a record)
+-->AFTER DELETE (After deleting a record)
+
+OLD AND NEW KEYWORDS 
+--------------------------------
+INSERT--->NEW
+UPDATE--->OLD+NEW
+DELETE--->OLD
+
+General Syntax:
+DELIMITER //
+CREATE TRIGGER trigger_name
+BEFORE/AFTER INSERT|UPDATE|DELETE
+ON table_name
+BEGIN
+SQL statements
+END //
+DELIMITER ;
+---------------------------------------------------------------
+
+BEFORE INSERT : Whenever we insert an employee name in lower case automatically convert into uppercase before storing it
+
+Query:
+delimiter //
+create trigger UpperCaseName
+before insert
+on employee
+for each row
+begin
+set new.emp_name=UPPER(new.emp_name);
+end //
+delimiter ;
+
+show create trigger UpperCaseName;
+
+insert into employee values(111,'karthik',50000,10,null);
+---------------------------------------------------------------
+
+AFTER INSERT : Whenever a new employee is inserted, automatically store their details in history table(Employee_Log table)
+
+create table Employee_Log(
+emp_id int,
+emp_name varchar(50),
+action_type varchar(30),
+action_date DATETIME
+);
+
+Query:
+delimiter //
+create trigger EmployeeLog
+after insert on employee
+for each row
+begin
+insert into employee_log (emp_id, emp_name, action_type, action_date)
+values (new.emp_id, new.emp_name, "INSERT', NOW());
+end //
+delimiter ;
+---------------------------------------------------------------------
+
+BEFORE UPDATE : An employee salary never be negative if someone tries to update salary with negative value, MySQL should prevent the operation
+
+Query:
+delimiter //
+create trigger CheckSalary
+before update on employee
+for each row
+begin
+IF new.salary<0 then 
+SIGNAL SQLSTATE '45000' 
+SET MESSAGE_TEXT='Invalid salary';
+END IF
+end //
+delimiter ;
+---------------------------------------------------------------------
+
+AFTER UPDATE : Whenever an employees salary is updated, automatically stores the old salary and new salary in salary_History table
+
+CREATE TABLE Salary_Histroy(
+history_id int auto_increment primary key,
+emp_id int,
+old_salary decimal(10,2),
+new_salary decimal(10,2),
+changed_date DATETIME
+);
+
+Query:
+delimiter //
+create trigger CheckSalary
+before update on employee
+for each row
+begin
+IF new.salary<>new.salary then 
+insert into Salary_History
+(emp_id, old_salary, new_salary, changed_date)
+values
+(old.emp_id, old.salary, new.salary, NOW()); 
+END IF
+end //
+delimiter ;
+---------------------------------------------------------------------
+
+BEFORE DELETE : 
+
+Query:
+delimiter //
+create trigger PreventDelete
+before delete on employee
+for each row
+begin
+if old.dept_id=20 then
+signal SQLSTATE '45000'
+set message_text='cannot delete 20 dept employee';
+end if;
+end //
+delimiter ;
+
+mysql> delete from employee where dept_id=20;
+ERROR 1644 (45000): cannot delete 20 dept employee
+-----------------------------------------------------------------------
+
+AFTER DELETE : Whenever an employee is deleted, automatically store their details in deleted_employee table
+
+CREATE TABLE deleted_employee(
+emp_id int,
+emp_name varchar(20),
+salary decimal(10,2),
+deleted_date DATETIME
+);
+
+Query:
+delimiter //
+create trigger DeletedEmployee
+after delete on employee
+for each row
+begin
+insert into DeletedEmployee
+(emp_id, emp_name, salary, deleted_date)
+values
+(old.emp_id, old.emp_name, old.salary, NOW());
+end //
+delimiter ;
+
+select *from deleted_employee;
+-------------------------------------------------------------------------
