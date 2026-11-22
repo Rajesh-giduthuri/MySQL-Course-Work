@@ -1,5 +1,7 @@
-**MySQL Course Work**
+##MySQL Course Work
+
 You can find:
+
 -MySQL & DBMS Introduction
 -SQL
 -Constraints
@@ -13,4 +15,4 @@ You can find:
 -ACID Properties
 -Stored Procedures & Triggers
 
-**Learn with example...Practice with example**
+##Learn with example...Practice with example
