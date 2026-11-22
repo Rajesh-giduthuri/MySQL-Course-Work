@@ -1,0 +1,30 @@
+VIEWS
+========================================================
+View is a virtual table created based on the result of sql query
+-->It does not store actual data separately. instead, it stores the sql query(view definition) in the database
+
+Simple view : A view created based on only one table without aggregate functions, joins, group by is called simple view
+-->can use update, insert, delete or any other operations
+Syntax:
+create view view_name as 
+select column1, column2
+from table_name
+where condition;
+--------------------------------------------------------
+
+#---show view tables-----------------
+show full table
+where table_type='VIEW';
+
+drop view view_name;
+--------------------------------------------------------
+
+Complex view : A view is created using multiple tables, joins, aggregate functions or Group by is called complex view
+-->can't use update, insert, delete or any other operations because two tables are joined
+Syntax:
+create view view_name as
+select column1, column2
+from table1
+join table2
+on condition;
+--------------------------------------------------------
