@@ -1,0 +1,108 @@
+OPERATORES
+===========================================
+Operators are special symbols or keywords used to perform operations on data and conditions in SQL queries.
+
+1.Arithmetic operator(+, -, *, %, /, DIV) : Used to perform mathematical calculations.
+SELECT fees, fees + 1000 AS updated_fees FROM student;
+--------------------------------------------
+
+2.Comparision operator(=, != or <>, <, >, <=, >=) : Used to compare two values. They are commonly used in the WHERE clause
+SELECT * FROM student WHERE fees > 20000;
+--------------------------------------------
+
+3.Logical operator(AND, OR, NOT) : Used to combine multiple conditions.
+SELECT * FROM student WHERE city = 'Hyderabad' AND fees > 20000;
+SELECT * FROM student WHERE city = 'Hyderabad' OR city = 'Chennai';
+SELECT * FROM student WHERE NOT city = 'Chennai';
+--------------------------------------------
+
+4.Assignment operator(=, :=) : Used to assign or update values.
+UPDATE student SET fees = fees + 1000 WHERE name = 'Arjun';
+SET @fees := 20000; SELECT @fees;
+---------------------------------------------
+
+5.Special operator : These operators are frequently used in SQL queries.
+-->BETWEEN : Checks a range
+SELECT * FROM student WHERE fees BETWEEN 10000 AND 30000;
+
+-->Alias(as) : It is a temporary name assigned to a column or an expression in a select statement
+SELECT sname as Student_Name FROM student;
+
+-->IN : Matches any value in a list
+SELECT * FROM student WHERE city IN ('Hyderabad', 'Chennai', 'Mumbai');
+
+-->LIKE : Pattern matching ('A%', '%A', '%A%', '_A%', '__A%')
+SELECT * FROM student WHERE name LIKE 'A%';
+
+-->IS NULL : Checks NULL values
+SELECT * FROM student WHERE city IS NULL;
+
+-->IS NOT NULL : Checks non-NULL values
+SELECT * FROM student WHERE city IS NOT NULL;
+
+-->EXISTS : Checks whether a subquery returns rows
+SELECT *
+FROM department d
+WHERE EXISTS (
+    SELECT 1
+    FROM employee e
+    WHERE e.dept_id = d.dept_id
+);
+-------------------------------------------------
+6.Bitwise operator(&, |, ^, ~, <<, >>) : These work on the binary representations of integer values.
+SELECT 5 & 3;
+SELECT 5 | 3;
+---------------------------------------------------
+
+
+Numeric Functions:
+=================================
+
+CEIL(): It is used to return the smallest integer that is greater than or equals to given number
+Syntax:
+ceil(number);
+------------------------------
+
+FLOOR(): It is used to return the largest integer that is less than or equal to the given number
+Syntax:
+floor(number);
+------------------------------
+
+POWER(): It is used to raise a number to the power of another number
+Syntax:
+power(base, exponent);
+------------------------------
+
+ABS(): It is used to return the absolute(non negative) value
+Syntax:
+select abs(-3457);
+------------------------------
+
+MOD(): It is used to return the reminder after dividing one number by another number 
+Syntax:
+select mod(dividend, divisor);
+------------------------------
+
+RAND(): It is used to generate a random floating point number between 0(inclusive) and 1(exclusive)
+Syntax:
+select rand();
+------------------------------
+
+SIGN(): 
+It is used to return a sign of a number
+-->returns 1 for +ve number
+-->returns -1 for -ve number
+-->returns 0 for Zero
+Syntax:
+select sign(-25);
+------------------------------
+
+Greatest(): It is used to return largest value among two or more specified expressions
+Syntax:
+select greatest(2,3,7,9);
+------------------------------
+
+LEAST(): It is used to return smallest value among two or more specified expressions
+Syntax:
+select least(2,3,7,9);
+------------------------------
