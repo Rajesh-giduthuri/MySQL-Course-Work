@@ -1,0 +1,97 @@
+JOINS :
+===================================
+A join is used to combine rows from two or more tables based on related columns between them 
+
+Types:
+--------------------
+-->INNER JOIN
+-->LEFT JOIN
+-->RIGHT JOIN
+-->FULL OUTER JOIN
+-->CROSS JOIN
+-->SELF JOIN
+-->NATURAL JOIN
+-->EQUI JOIN
+-->NON EQUI JOIN
+
+INNER JOIN : It returns only matching records from both records
+Syntax:
+select columns from table1
+INNER JOIN table2
+ON table1.column = table2.column
+------------------------------------
+
+LEFT JOIN : It returns all records from the left table and only matching records from right table
+--> Non matching right table records become null
+Syntax:
+select columns from table1
+LEFT JOIN table2
+ON table1.column = table2.column
+------------------------------------
+
+RIGHT JOIN : It returns all records from the right table and only matching records from left table
+--> Non matching left table records become null.
+Syntax:
+select columns from table1
+RIGHT JOIN table2
+ON table1.column = table2.column
+------------------------------------
+
+FULL OUTER JOIN : It returns all matching and non matching records from both tables 
+-->MySQL doesn't directly support full outer join 
+-->use left join, right join and Union
+Syntax:
+select columns
+from table1
+left join table2
+on table1.column=table2.column
+UNION
+select columns
+from table1
+right join table2
+on table1.column=table2.column;
+------------------------------------
+
+CROSS JOIN : It returns the cartesian product(m*n) of two tables
+-->Every row from the first table is combined with every row from second table
+Syntax:
+select columns 
+from table1
+CROSS JOIN table2;
+------------------------------------
+
+SELF JOIN : It is a join operation in which table is joined with itself
+Syntax:
+select columns
+from table e
+JOIN table m
+on e.column=m.column;
+------------------------------------
+
+EQUI JOIN : uses the equality(=) operator in the joining condition
+Syntax: (equi join)
+select columns
+from table1 a,table2 b
+where a.column=b.column;
+
+Syntax: (equi join)
+select columns
+from table1 a
+join table2 b
+where a.column=b.column;
+------------------------------------
+
+NON EQUI JOIN :	It uses comparison(>,<,>=,<=,!=,Between) operator rather than equality operator
+Syntax:
+select columns
+from table1 a
+join table2 b
+on a.column between b.column and b.column
+-------------------------------------
+
+NATURAL JOIN : automatically joins two tables based on common column
+Syntax:
+select column
+from table1
+NATURAL JOIN table2;
+-------------------------------------
